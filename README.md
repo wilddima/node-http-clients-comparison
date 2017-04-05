@@ -1,21 +1,28 @@
-# Comparison of HTTP Clients for NodeJS
+# HTTP Clients compared
 
-For these tests, i used this api: https://httpbin.org/
+For these tests, I used the [HTTPbin](https://httpbin.org/).
 
 <table>
 <tr>
   <th></th>
   <th>Request</th>
-  <th>axios</th>
+  <th>Axios</th>
   <th>SuperAgent</th>
-  <th>node-fetch</th>
+  <th>Node-Fetch</th>
 </tr>
 <tr>
-  <td>Cross platform</td>
   <td>NodeJS</td>
-  <td>Browser<br/>NodeJS</td>
-  <td>Browser<br/>NodeJS</td>
-  <td>Browser(*)<br/>NodeJS</td>
+  <td>+</td>
+  <td>+</td>
+  <td>+</td>
+  <td>+</td>
+ </tr>
+<tr>
+  <td>Browser</td>
+  <td>–</td>
+  <td>+</td>
+  <td>+</td>
+  <td>+</td>
  </tr>
 <tr>
   <td>Custom headers</td>
@@ -99,6 +106,15 @@ For these tests, i used this api: https://httpbin.org/
 </table>
 * - Node-fetch was developed with an eye to support they same api, as browsers native 'fetch'.
 
+## NodeJS
+
+All platforms are available as NPM packages.
+
+## Browser
+
+1. You can bundle Request but it's way too big (~2 Mib) for Browser (due to NodeJS Streams etc.).
+2. Node-Fetch just emulates native [fetch API](https://developer.mozilla.org/en/docs/Web/API/Fetch_API).
+
 ## GET params
 
 Of course, all of these libraries supports parameters passing through the URL.
@@ -171,7 +187,7 @@ superagent.get(url)
 })
 ```
 
-### node-fetch
+### Node-Fetch
 
 ```js
 let url = "https://httpbin.org/get?id=30"
@@ -190,9 +206,10 @@ fetch(url)
   })
 ```
 
-## Custom http verbs
+## Custom HTTP verbs
 
 ### Request
+
 ```js
 let params = {
   method: 'move',
@@ -206,6 +223,7 @@ request(params, (error, response, body) => {
 ```
 
 ### Axios
+
 ```js
 let params = {
   method: 'move',
@@ -235,7 +253,8 @@ superagent(method, url)
 })
 ```
 
-### node-fetch
+### Node-Fetch
+
 ```js
 let params = { method: 'move' }
 let url = "https://httpbin.org/get?id=30"
@@ -257,7 +276,9 @@ request
 ```
 
 ### Axios
+
 To perform post request with `application/x-www-form-urlencoded` in Axios, we need to use `querystring` or `qs`
+
 ```js
 const querystring = require('querystring')
 
@@ -269,6 +290,7 @@ error(err)})
 ```
 
 ### Superagent
+
 By default SuperAgent user `json`, and to use `application/x-www-form-urlencoded` we need to invoke `type()`, and pass 'form' to it.
 
 ```js
@@ -281,8 +303,9 @@ superagent
 })
 ```
 
-### node-fetch
-To do the same in `node-fetch` we need to set headers manually, or use external libraries
+### Node-Fetch
+
+To do the same in Node-Fetch we need to set headers manually, or use external libraries
 
 ```js
 fetch(endPoints.post.url, { method: 'post',
@@ -294,22 +317,23 @@ fetch(endPoints.post.url, { method: 'post',
 ```
 ## Redirect 302
 
-### request
-Add `Referer` header. For example:
+### Request
+
+Adds `Referer` header. For example:
 
 ```js
 "Referer": "http://httpbin.org/redirect-to?url=http://httpbin.org/get"
 ```
 
-### Axios, Superagent, node-fetch
+### Axios, Superagent, Node-Fetch
 
 There is no difference between normal get request, and redirected request.
 
 ## Basic-auth
 
-Request and Axios has got similar API for BasicAuth:
+Request and Axios have got similar API for BasicAuth:
 
-### request
+### Request
 
 ```js
 let basicAuth = {
@@ -323,7 +347,7 @@ let basicAuth = {
 
 request(basicAuth, (error, response, body) => console.log(response.statusCode))
 ```
-### axios
+### Axios
 
 ```js
 let basicAuth = {
@@ -353,10 +377,10 @@ All these libraries have a sufficient set of plugins created by the community (f
 
 In the process of comparing their libraries, I came to the conclusion that they all have enough positive sides to use them.
 
-`Request` - despite the fact that it is not cross-platform, it undoubtedly has the most opportunities out of the box. Ability to use `node streams` is look attractive.
+`Request` - despite the fact that it is not cross-platform, it undoubtedly has the most opportunities out of the box. Ability to use `node streams` looks attractive.
 
 `Axios` - as for me has the most understandable syntax and follows the idea of 'principle of least surprise'.
 
 `SuperAgent` - also has a fairly understandable api, but much more important is the idea of its extensibility through plugins.
 
-`node-fetch` - good old fetch api. A small number of dependencies and a familiar interface.
+`Node-Fetch` - good old fetch api. A small number of dependencies and a familiar interface.
