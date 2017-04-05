@@ -30,6 +30,13 @@
   <td>Promise</td>
 </tr>
 <tr>
+  <td>Query params</td>
+  <td><code>object</code>,<br/><code>url</code></td>
+  <td><code>object</code>,<br/><code>url</code></td>
+  <td><code>object</code>,<br/><code>url</code></td>
+  <td><code>url</code></td>
+</tr>
+<tr>
   <td>Custom HTTP verbs</td>
   <td>+</td>
   <td>+</td>
@@ -65,13 +72,6 @@
   <td>+</td>
   <td>+</td>
   <td>+</td>
-</tr>
-<tr>
-  <td>GET params</td>
-  <td><code>object</code>,<br/><code>url</code></td>
-  <td><code>object</code>,<br/><code>url</code></td>
-  <td><code>object</code>,<br/><code>url</code></td>
-  <td><code>url</code></td>
 </tr>
 <tr>
   <td>Forms</td>
@@ -112,70 +112,78 @@ All platforms are available as NPM packages.
 1. You can bundle Request but it's way too big (~2 Mib) for Browser (due to NodeJS Streams etc.).
 2. Node-Fetch just emulates native [fetch API](https://developer.mozilla.org/en/docs/Web/API/Fetch_API).
 
-## GET params
-
-Of course, all of these libraries supports parameters passing through the URL.
-
-```js
-let params = 'https://httpbin.org/get?id=30'
-```
+## API
 
 ### Request
 
-Supports callbacks and streams api natively. Also can use promises through external plugins.
+Supports callback and streaming APIs natively. There are external plugins for promise API. Or just `new Promise(...)` ;)
+
+TODO:
+* 404 is an "error" or not? 
+* 500 is an "error" or not?
 
 ```js
-let params = {
-  url: 'https://httpbin.org/get',
-  qs: { id: 30 }
+let opts = {
+  url: "https://httpbin.org/get",
+  qs: { id: 30 },
 }
 
-# callback
-request.get(params, (error, response, body) => {
-  if(error) {
-    console.log(error)
-  } else {
-    console.log(response.statusCode)
-    console.log(response.headers)
-    console.log(body)
-  }
+// callback
+request.get(opts, (err, response, body) => {
+  if (err) {
+    console.log("err:", err)
+  } 
+  else {
+    console.log("code:", response.statusCode) // : number
+    console.log("headers:", response.headers) // : Object
+    console.log("body:", body)                // : TODO auto parsed due to mimetype?!
+  }  
 })
 
-# streams
+// streaming
 request(params).pipe(process.stdout)
 ```
 
 ### Axios
 
+TODO:
+* 404 is an "error" or not? 
+* 500 is an "error" or not?
+
 ```js
-let params = {
-  url: 'https://httpbin.org/get',
-  params: { id: 30 }
+let opts = {
+  url: "https://httpbin.org/get",
+  params: { id: 30 },
 }
 
-axios.get(params)
+axios.get(opts)
   .then((res) => {
-    console.log(res.status)
-    console.log(res.headers)
-    console.log(res.data)
-  }).catch((err) => {
+    console.log("code:", res.status)     // TODO type
+    console.log("headers:", res.headers) // TODO type
+    console.log("body:", res.data)       // TODO type
+  })
+  .catch((err) => {
     console.log(err.status)
-    console.log(res.data)
   })
 ```
 
+
 ### SuperAgent
 
+TODO:
+* 404 is an "error" or not? 
+* 500 is an "error" or not?
+
 ```js
-let url = 'https://httpbin.org/get'
+let url = "https://httpbin.org/get"
 let params = { id: 30 }
 
 superagent.get(url)
   .query(params)
   .end((err, res) => {
-    if(err) {
-      console.log(err.status)
-      console.log(err.response.error)
+    if (err) {
+      console.log("err:", err.status)
+      console.log("err:", err.response.error)
     } else {
       console.log(res.statusCode)
       console.log(res.headers)
@@ -186,22 +194,34 @@ superagent.get(url)
 
 ### Node-Fetch
 
+TODO:
+* 404 is an "error" or not? 
+* 500 is an "error" or not?
+
 ```js
 let url = "https://httpbin.org/get?id=30"
 
 fetch(url)
   .then(res => {
-	  console.log(res.status)
-	  console.log(res.headers)
-	  return(res)
+    console.log(res.status)
+    console.log(res.headers)
+    return(res)
   })
   .then(res => res.json())
   .then(res => {
-	  console.log(res)
+    console.log(res)
   }).catch(err => {
-	  console.log(error)
+    console.log(error)
   })
 ```
+
+## Custom HTTP verbs
+
+TODO demo
+
+## Custom HTTP headers
+
+TODO demo
 
 ## Custom HTTP verbs
 
@@ -262,6 +282,11 @@ fetch(url, params)
   })
 ```
 
+## Query params
+
+All four libraries support passing query params in URL.<br/>
+Node-Fetch does not support query-as-object passing.
+
 ## Forms
 
 ### Request
@@ -286,7 +311,7 @@ axios.post(endPoints.post.url, querystring.stringify({form: {test: 'test'}}))
 error(err)})
 ```
 
-### Superagent
+### SuperAgent
 
 By default SuperAgent user `json`, and to use `application/x-www-form-urlencoded` we need to invoke `type()`, and pass 'form' to it.
 
