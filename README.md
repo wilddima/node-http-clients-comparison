@@ -1,7 +1,5 @@
 # HTTP Clients compared
 
-For these tests, I used the [HTTPbin](https://httpbin.org/).
-
 <table>
 <tr>
   <th></th>
@@ -23,13 +21,43 @@ For these tests, I used the [HTTPbin](https://httpbin.org/).
   <td>+</td>
   <td>+</td>
   <td>+</td>
- </tr>
+</tr>
 <tr>
-  <td>Custom headers</td>
+  <td>API</td>
+  <td>Callback<br/>Stream</td>
+  <td>Promise</td>
+  <td>Promise-compatible</td>
+  <td>Promise</td>
+</tr>
+<tr>
+  <td>Custom HTTP verbs</td>
   <td>+</td>
   <td>+</td>
   <td>+</td>
   <td>+</td>
+</tr> 
+<tr>
+  <td>Custom HTTP headers</td>
+  <td>+</td>
+  <td>+</td>
+  <td>+</td>
+  <td>+</td>
+</tr>
+<tr>
+  <td>Default HTTP headers</td>
+  <td><code>Connection</code><br/><code>Host</code></td>
+  <td><code>Accept</code><br/><code>Connection</code><br/><code>Host</code><br/><code>User-Agent</code></td>
+  <td><code>Accept-Encoding</code><br/>
+     <code>Connection</code><br/>
+     <code>Host</code><br/>
+     <code>User-Agent</code></td>
+  <td>
+    <code>Accept</code><br/>
+    <code>Accept-Encoding</code><br/>
+    <code>Connection</code><br/>
+    <code>Host</code><br/>
+    <code>User-Agent</code>
+  </td>
 </tr>
 <tr>
   <td>HTTPS</td>
@@ -40,24 +68,10 @@ For these tests, I used the [HTTPbin](https://httpbin.org/).
 </tr>
 <tr>
   <td>GET params</td>
-  <td><code>in object</code>,<br/><code>in url</code></td>
-  <td><code>in object</code>,<br/><code>in url</code></td>
-  <td><code>in object</code>,<br/><code>in url</code></td>
-  <td><code>in url</code></td>
-</tr>
-<tr>
-  <td>Custom HTTP verbs</td>
-  <td>+</td>
-  <td>+</td>
-  <td>+</td>
-  <td>+</td>
-</tr>
-<tr>
-  <td>API type</td>
-  <td>Callbacks<br/>Streaming</td>
-  <td>Promises</td>
-  <td>Promise-compatible</td>
-  <td>Promises</td>
+  <td><code>object</code>,<br/><code>url</code></td>
+  <td><code>object</code>,<br/><code>url</code></td>
+  <td><code>object</code>,<br/><code>url</code></td>
+  <td><code>url</code></td>
 </tr>
 <tr>
   <td>Forms</td>
@@ -81,30 +95,13 @@ For these tests, I used the [HTTPbin](https://httpbin.org/).
   <td>-</td>
 </tr>
 <tr>
-  <td>Basic auth(out of box)</td>
+  <td>Basic auth (by default)</td>
   <td>+</td>
   <td>+</td>
   <td>+</td>
   <td>-</td>
 </tr>
-<tr>
-  <td>Default headers</td>
-  <td><code>Connection</code><br/><code>Host</code></td>
-  <td><code>Accept</code><br/><code>Connection</code><br/><code>Host</code><br/><code>User-Agent</code></td>
-  <td><code>Accept-Encoding</code><br/>
-     <code>Connection</code><br/>
-     <code>Host</code><br/>
-     <code>User-Agent</code></td>
-  <td>
-    <code>Accept</code><br/>
-    <code>Accept-Encoding</code><br/>
-    <code>Connection</code><br/>
-    <code>Host</code><br/>
-    <code>User-Agent</code>
-  </td>
-</tr>
 </table>
-* - Node-fetch was developed with an eye to support they same api, as browsers native 'fetch'.
 
 ## NodeJS
 
@@ -374,6 +371,8 @@ superagent.get('https://httpbin.org/basic-auth/user/passwd')
 All these libraries have a sufficient set of plugins created by the community (for example, the implementation of the promise api for the Request). However, from this point of view, it is worth highlighting SuperAgent, which has a specialized interface for connecting plugins (https://github.com/visionmedia/superagent#plugins)
 
 ## Conclusion
+
+For these tests, I used [HTTPbin](https://httpbin.org/).
 
 In the process of comparing their libraries, I came to the conclusion that they all have enough positive sides to use them.
 
