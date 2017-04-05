@@ -123,7 +123,8 @@ All platforms are available as NPM packages.
 
 ### Request
 
-Supports callback and streaming APIs natively. There are external plugins for promise API. Or just `new Promise(...)` ;)
+Supports callback and streaming APIs natively. There are external plugins for promise API.<br/>
+Or just `new Promise(...)` ;)
 
 TODO:
 * 404 is an "error" or not? 
@@ -183,10 +184,10 @@ TODO:
 
 ```js
 let url = "https://httpbin.org/get"
-let params = { id: 30 }
+let opts = { id: 30 }
 
 superagent.get(url)
-  .query(params)
+  .query(opts)
   .end((err, res) => {
     if (err) {
       console.log("err:", err.status)
@@ -235,13 +236,13 @@ TODO demo
 ### Request
 
 ```js
-let params = {
+let opts = {
   method: 'move',
   url: 'https://httpbin.org/get',
   qs: { id: 30 }
 }
 
-request(params, (error, response, body) => {
+request(opts, (error, response, body) => {
  //....
 })
 ```
@@ -249,13 +250,13 @@ request(params, (error, response, body) => {
 ### Axios
 
 ```js
-let params = {
+let opts = {
   method: 'move',
   url: 'https://httpbin.org/get',
   params: { id: 30 }
 }
 
-axios(params)
+axios(opts)
   .then((res) => {
     //...
   }).catch((err) => {
@@ -280,10 +281,10 @@ superagent(method, url)
 ### Node-Fetch
 
 ```js
-let params = { method: 'move' }
+let opts = { method: 'move' }
 let url = "https://httpbin.org/get?id=30"
 
-fetch(url, params)
+fetch(url, opts)
   .then(
     //...
   })
@@ -344,15 +345,17 @@ fetch(endPoints.post.url, { method: 'post',
     //....
   )
 ```
-## Redirect 302
+## Auto Redirect On
 
-### Request
+Request adds `Referer` header like:
 
-Adds `Referer` header. For example:
-
-```js
-"Referer": "http://httpbin.org/redirect-to?url=http://httpbin.org/get"
 ```
+Referer: http://httpbin.org/redirect-to?url=http://httpbin.org/get
+```
+
+## Auto Redirect Off
+
+...
 
 ### Axios, Superagent, Node-Fetch
 
