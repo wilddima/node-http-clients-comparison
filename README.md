@@ -24,17 +24,17 @@
 </tr>
 <tr>
   <td>API</td>
-  <td>Callback<br/>Stream</td>
+  <td>Callback / Stream</td>
   <td>Promise</td>
   <td>Promise-compatible</td>
   <td>Promise</td>
 </tr>
 <tr>
   <td>Query params</td>
-  <td><code>object</code>,<br/><code>url</code></td>
-  <td><code>object</code>,<br/><code>url</code></td>
-  <td><code>object</code>,<br/><code>url</code></td>
-  <td><code>url</code></td>
+  <td>url / object</td>
+  <td>url / object</td>
+  <td>url / object</td>
+  <td>url</td>
 </tr>
 <tr>
   <td>Custom HTTP verbs</td>
@@ -88,11 +88,18 @@
   <td>-</td>
 </tr>
 <tr>
-  <td>Redirect 302</td>
-  <td><code>Adds header</code></td>
-  <td>-</td>
-  <td>-</td>
-  <td>-</td>
+  <td>Auto Redirect On</td>
+  <td>++</td>
+  <td>+</td>
+  <td>+</td>
+  <td>+</td>
+</tr>
+<tr>
+  <td>Auto Redirect Off</td>
+  <td>TODO ?</td>
+  <td>TODO ?</td>
+  <td>TODO ?</td>
+  <td>TODO ?</td>
 </tr>
 <tr>
   <td>Basic auth (by default)</td>
@@ -401,10 +408,10 @@ For these tests, I used [HTTPbin](https://httpbin.org/).
 
 In the process of comparing their libraries, I came to the conclusion that they all have enough positive sides to use them.
 
-`Request` - despite the fact that it is not cross-platform, it undoubtedly has the most opportunities out of the box. Ability to use `node streams` looks attractive.
+**Request** – despite the fact that it is not cross-platform, it undoubtedly has the most opportunities out of the box. Ability to use NodeJS streams looks attractive.
 
-`Axios` - as for me has the most understandable syntax and follows the idea of 'principle of least surprise'.
+**Axios** – as for me has the most understandable syntax and follows the idea of 'principle of least surprise'.
 
-`SuperAgent` - also has a fairly understandable api, but much more important is the idea of its extensibility through plugins.
+**SuperAgent** – also has a fairly understandable api, but much more important is the idea of its extensibility through plugins.
 
-`Node-Fetch` - good old fetch api. A small number of dependencies and a familiar interface.
+**Node-Fetch** – good old fetch api. A small number of dependencies and a familiar interface.
