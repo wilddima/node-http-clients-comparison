@@ -42,7 +42,7 @@
   <td>+</td>
   <td>+</td>
   <td>+</td>
-</tr> 
+</tr>
 <tr>
   <td>Custom HTTP headers</td>
   <td>+</td>
@@ -127,7 +127,7 @@ Supports callback and streaming APIs natively. There are external plugins for pr
 Or just `new Promise(...)` ;)
 
 TODO:
-* 404 is an "error" or not? 
+* 404 is an "error" or not?
 * 500 is an "error" or not?
 
 ```js
@@ -140,22 +140,22 @@ let opts = {
 request.get(opts, (err, response, body) => {
   if (err) {
     console.log("err:", err)
-  } 
+  }
   else {
     console.log("code:", response.statusCode) // : number
     console.log("headers:", response.headers) // : Object
     console.log("body:", body)                // : TODO auto parsed due to mimetype?!
-  }  
+  }
 })
 
 // streaming
-request(params).pipe(process.stdout)
+request(opts).pipe(process.stdout)
 ```
 
 ### Axios
 
 TODO:
-* 404 is an "error" or not? 
+* 404 is an "error" or not?
 * 500 is an "error" or not?
 
 ```js
@@ -179,7 +179,7 @@ axios.get(opts)
 ### SuperAgent
 
 TODO:
-* 404 is an "error" or not? 
+* 404 is an "error" or not?
 * 500 is an "error" or not?
 
 ```js
@@ -203,7 +203,7 @@ superagent.get(url)
 ### Node-Fetch
 
 TODO:
-* 404 is an "error" or not? 
+* 404 is an "error" or not?
 * 500 is an "error" or not?
 
 ```js
@@ -237,8 +237,8 @@ TODO demo
 
 ```js
 let opts = {
-  method: 'move',
-  url: 'https://httpbin.org/get',
+  method: "move",
+  url: "https://httpbin.org/get",
   qs: { id: 30 }
 }
 
@@ -251,8 +251,8 @@ request(opts, (error, response, body) => {
 
 ```js
 let opts = {
-  method: 'move',
-  url: 'https://httpbin.org/get',
+  method: "move",
+  url: "https://httpbin.org/get",
   params: { id: 30 }
 }
 
@@ -267,8 +267,8 @@ axios(opts)
 ### SuperAgent
 
 ```js
-let method = 'move'
-let url = 'https://httpbin.org/get'
+let method = "move"
+let url = "https://httpbin.org/get"
 let params = { id: 30 }
 
 superagent(method, url)
@@ -281,7 +281,7 @@ superagent(method, url)
 ### Node-Fetch
 
 ```js
-let opts = { method: 'move' }
+let opts = { method: "move" }
 let url = "https://httpbin.org/get?id=30"
 
 fetch(url, opts)
@@ -301,7 +301,7 @@ Node-Fetch does not support query-as-object passing.
 
 ```js
 request
-  .post('https://httpbin.org/post', { form: { test: 'test' } })
+  .post("https://httpbin.org/post", { form: { test: "test" } })
   .pipe(process.stdout)
 ```
 
@@ -310,24 +310,27 @@ request
 To perform post request with `application/x-www-form-urlencoded` in Axios, we need to use `querystring` or `qs`
 
 ```js
-const querystring = require('querystring')
+const querystring = require("querystring")
 
-axios.post(endPoints.post.url, querystring.stringify({form: {test: 'test'}}))
+axios
+  .post(endPoints.post.url, querystring.stringify({form: {test: "test"}}))
   .then((res) => {
-  response(res)
-}).catch((err) => {
-error(err)})
+    response(res)
+  })
+  .catch((err) => {
+    error(err)
+  })
 ```
 
 ### SuperAgent
 
-By default SuperAgent user `json`, and to use `application/x-www-form-urlencoded` we need to invoke `type()`, and pass 'form' to it.
+By default SuperAgent user `json`, and to use `application/x-www-form-urlencoded` we need to invoke `type()`, and pass "form" to it.
 
 ```js
 superagent
-  .post('https://httpbin.org/post')
-  .type('form')
-  .send({ test: 'test'})
+  .post("https://httpbin.org/post")
+  .type("form")
+  .send({ test: "test"})
   .end((err, res) => {
     //....
 })
@@ -338,9 +341,9 @@ superagent
 To do the same in Node-Fetch we need to set headers manually, or use external libraries
 
 ```js
-fetch(endPoints.post.url, { method: 'post',
-                            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                            body: 'test=test' })
+fetch(endPoints.post.url, { method: "post",
+                            headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                            body: "test=test" })
   .then(
     //....
   )
@@ -369,11 +372,11 @@ Request and Axios have got similar API for BasicAuth:
 
 ```js
 let basicAuth = {
-  method: 'get',
-  uri: 'https://httpbin.org/basic-auth/user/passwd',
+  method: "get",
+  uri: "https://httpbin.org/basic-auth/user/passwd",
   auth: {
-    user: 'user',
-    pass: 'passwd'
+    user: "user",
+    pass: "passwd"
   }
 }
 
@@ -383,11 +386,11 @@ request(basicAuth, (error, response, body) => console.log(response.statusCode))
 
 ```js
 let basicAuth = {
-    method: 'get',
-    url: 'https://httpbin.org/basic-auth/user/passwd',
+    method: "get",
+    url: "https://httpbin.org/basic-auth/user/passwd",
     auth: {
-      username: 'user',
-      password: 'passwd'
+      username: "user",
+      password: "passwd"
     }
   }
 
@@ -397,12 +400,13 @@ axios(basicAuth).then(res => console.log(res.status))
 ### SuperAgent
 
 ```js
-superagent.get('https://httpbin.org/basic-auth/user/passwd')
-  .auth('user', 'passwd')
+superagent.get("https://httpbin.org/basic-auth/user/passwd")
+  .auth("user", "passwd")
   .end((err, res) => console.log(res.statusCode))
 ```
 
 ## Plugins
+
 All these libraries have a sufficient set of plugins created by the community (for example, the implementation of the promise api for the Request). However, from this point of view, it is worth highlighting SuperAgent, which has a specialized interface for connecting plugins (https://github.com/visionmedia/superagent#plugins)
 
 ## Conclusion
@@ -413,7 +417,7 @@ In the process of comparing their libraries, I came to the conclusion that they 
 
 **Request** – despite the fact that it is not cross-platform, it undoubtedly has the most opportunities out of the box. Ability to use NodeJS streams looks attractive.
 
-**Axios** – as for me has the most understandable syntax and follows the idea of 'principle of least surprise'.
+**Axios** – as for me has the most understandable syntax and follows the idea of "principle of least surprise".
 
 **SuperAgent** – also has a fairly understandable api, but much more important is the idea of its extensibility through plugins.
 
